@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DistancesExport;
 use App\Models\Address;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use function Sodium\add;
 
@@ -21,7 +21,6 @@ class DistanceController extends Controller
         $addresses = Address::getEightWonders();
         $headquarters = Address::getHeadQuarters();
 
-        $distances = [];
         $client = new Client();
 
         foreach ($addresses as $address) {
@@ -33,35 +32,22 @@ class DistanceController extends Controller
                 $distance = round($data['rows'][0]['elements'][0]['distance']['value'] / 1000, 2);
                 $address->distance = $distance;
                 $address->save();
-                $distances[] = [
-                    'address' => $address,
-                    'distance' => $distance,
-                ];
             } else {
-                // Handle the case where the response is not as expected
-                $distances[] = [
-                    'address' => $address,
-                    'distance' => null,
-                ];
+                // Handle the case where the response is not as expected by using positionStack instead
+                $address->distance = null;
+                $address->save();
             }
         }
 
         $this->distancesCalculated = true;
+
+        $this->generateCsv();
+
     }
 
-    private function generateCsv($distances)
+    private function generateCsv()
     {
-        $csvData = [];
-        foreach ($distances as $address => $distance) {
-            $csvData[] = [$address, $distance];
-        }
-
-        Excel::create('distances.csv', function ($excel) use ($csvData) {
-            $excel->sheet('Sheet1', function ($sheet) use ($csvData) {
-                $sheet->fromArray($csvData);
-            });
-        })->export('csv');
+        $fileName = 'distances_' . date('YmdHis') . '.csv';
+        return Excel::store(new DistancesExport(),  'exports/' . $fileName, 'local');
     }
-
-
 }

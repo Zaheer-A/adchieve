@@ -29,5 +29,10 @@ class Address extends Model
         return Address::where('type', 'given')->get();
     }
 
+    public static function getAllAddressesSorted()
+    {
+        return Address::whereNot('type', 'headquarters')->get()->sortBy('distance');
+    }
+
 
 }
