@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('address');
             $table->enum('type', ['headquarters', 'other']);
-            $table->decimal('distance', 8, 2);
+            $table->decimal('distance', 8, 2)->nullable();
             $table->timestamps();
         });
     }
