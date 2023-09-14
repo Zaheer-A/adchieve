@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->enum('type', ['headquarters', 'other']);
+            $table->enum('type', ['headquarters', 'given', 'custom']);
             $table->decimal('distance', 8, 2)->nullable();
             $table->timestamps();
         });
