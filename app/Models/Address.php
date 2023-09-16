@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
-    protected $fillable = ['address', 'type', 'distance'];
+    protected $fillable = ['address', 'type', 'distance', 'latitude', 'longitude'];
 
     /**
      * Get the first available current headquarters
@@ -19,6 +19,8 @@ class Address extends Model
         return Address::where('type', 'headquarters')->firstOrCreate(
             ['address' => 'Adchieve HQ - Sint Janssingel 92, 5211 DA \'s-Hertogenbosch, The Netherlands'],
             ['type' => 'headquarters'],
+            ['latitude' => 51.6882],
+            ['longitude' => 5.298532],
             ['distance' => 0.00]
         );
     }
