@@ -9,14 +9,14 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class DistancesExport implements FromCollection, WithHeadings
 {
-    protected $addresses;
+    protected Collection $addresses;
 
     public function __construct(Collection $addresses)
     {
         $this->addresses = $addresses;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         $sortNumber = 0;
         echo "Sortnumber | Distance | Address <br/>";
