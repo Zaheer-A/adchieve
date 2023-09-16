@@ -48,6 +48,7 @@ class DistanceController extends Controller
     private function generateCsv()
     {
         $fileName = 'distances_' . date('YmdHis') . '.csv';
-        return Excel::store(new DistancesExport(),  'exports/' . $fileName, 'local');
+        $addresses = Address::getAllAddressesSorted();
+        return Excel::store(new DistancesExport($addresses),  'exports/' . $fileName, 'local');
     }
 }
