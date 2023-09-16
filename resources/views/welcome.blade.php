@@ -37,7 +37,7 @@
                                 <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">How far are the 8 wonders?</h2>
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Download the CSV with the 8 provided addresses sorted by distance.
+                                    See the distance to each one of the 8 wonders from the Adchive headquarters.
                                 </p>
                             </div>
 
